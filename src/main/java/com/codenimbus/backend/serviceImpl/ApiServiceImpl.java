@@ -2,10 +2,12 @@ package com.codenimbus.backend.serviceImpl;
 
 import com.codenimbus.backend.entity.Course;
 import com.codenimbus.backend.entity.Dsa;
-import com.codenimbus.backend.entity.Question;
+import com.codenimbus.backend.entity.DynamicProgrammingQuestion;
+import com.codenimbus.backend.entity.StringsQuestion;
 import com.codenimbus.backend.repository.CourseRepository;
 import com.codenimbus.backend.repository.DsaRepository;
-import com.codenimbus.backend.repository.QuestionRepository;
+import com.codenimbus.backend.repository.DynamicProgrammingQuestionRepository;
+import com.codenimbus.backend.repository.StringsQuestionRepository;
 import com.codenimbus.backend.service.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,10 @@ public class ApiServiceImpl implements ApiService {
     private DsaRepository dsaRepository;
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private StringsQuestionRepository stringsQuestionRepository;
+
+    @Autowired
+    private DynamicProgrammingQuestionRepository dynamicProgrammingQuestionRepository;
 
     @Override
     public List<Course> getCourses() {
@@ -48,7 +53,49 @@ public class ApiServiceImpl implements ApiService {
     }
 
     @Override
-    public List<Question> getQuestionsByCategory(String category) {
-        return null;
+    public boolean addDsaTopic(Dsa dsa) {
+
+        try {
+            dsaRepository.save(dsa);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
+
+    @Override
+    public List<StringsQuestion> getStrings() {
+        return stringsQuestionRepository.findAll();
+    }
+
+    @Override
+    public boolean addStrings(StringsQuestion stringsQuestion) {
+
+        try {
+            stringsQuestionRepository.save(stringsQuestion);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public List<DynamicProgrammingQuestion> getDynamicProgramming() {
+        return dynamicProgrammingQuestionRepository.findAll();
+    }
+
+    @Override
+    public boolean addDynamicProgramming(DynamicProgrammingQuestion dynamicProgrammingQuestion) {
+
+        try {
+            dynamicProgrammingQuestionRepository.save(dynamicProgrammingQuestion);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
 }

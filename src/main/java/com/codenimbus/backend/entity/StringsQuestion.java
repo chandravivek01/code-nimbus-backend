@@ -1,25 +1,28 @@
 package com.codenimbus.backend.entity;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
-@Table(name = "questions")
-public class Question {
+@Table(name = "strings_question")
+public class StringsQuestion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
+    @Column(name = "question_name")
     private String questionName;
+
+    @Column(name = "statement", columnDefinition = "TEXT")
     private String statement;
+
+    @Column(name = "example", columnDefinition = "TEXT")
     private String example;
-
-    // getters and setters
 }
-

@@ -2,7 +2,8 @@ package com.codenimbus.backend.controller;
 
 import com.codenimbus.backend.entity.Course;
 import com.codenimbus.backend.entity.Dsa;
-import com.codenimbus.backend.entity.Question;
+import com.codenimbus.backend.entity.DynamicProgrammingQuestion;
+import com.codenimbus.backend.entity.StringsQuestion;
 import com.codenimbus.backend.serviceImpl.ApiServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
 public class ApiController {
 
@@ -38,10 +40,36 @@ public class ApiController {
         return service.getDsa();
     }
 
-    @GetMapping("/questions/{category}")
-    public List<Question> getQuestionsByCategory(@PathVariable String category) {
+    @PostMapping("/dsa")
+    public ResponseEntity<String> addDsaTopic(@RequestBody Dsa dsa) {
+
+        if ( service.addDsaTopic(dsa) ) {
+            return new ResponseEntity<>("Topic added successfully", HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Failed to add topic", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/questions/strings")
+    public List<StringsQuestion> getQuestionsByStrings() {
         // Implement logic to return questions by category
-        return  service.getQuestionsByCategory(category);
+        return  service.getStrings();
+    }
+
+    @PostMapping("/questions/strings")
+    public ResponseEntity<String> addStringsuestion(@RequestBody StringsQuestion stringsQuestion) {
+
+        if ( service.addStrings(stringsQuestion) ) {
+            return new ResponseEntity<>("Question added successfully", HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Failed to add question", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/questions/dynamicprogramming")
+    public List<DynamicProgrammingQuestion> getQuestionsByDynamicProgramming() {
+        // Implement logic to return questions by category
+        return  service.getDynamicProgramming();
     }
 }
 
